@@ -1,0 +1,17 @@
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\App.g.cs
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager_MarkupCompile.cache
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager_MarkupCompile.lref
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\bin\Debug\Minecraft_Server_Manager.exe.config
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\bin\Debug\Minecraft_Server_Manager.exe
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\bin\Debug\Minecraft_Server_Manager.pdb
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\MainWindow.baml
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager.g.resources
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager.Properties.Resources.resources
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager.csproj.GenerateResource.cache
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager.exe
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\Minecraft_Server_Manager.pdb
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\DownloadPages\paper.g.cs
+C:\Users\Administrator\Desktop\MSM\Minecraft_Server_Manager\Minecraft_Server_Manager\obj\Debug\DownloadPages\paper.baml
