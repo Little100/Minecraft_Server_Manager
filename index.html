@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSM服务器管理器 - 官方网站</title>
+    <style>
+        @font-face {
+            font-family: 'MinecraftAE';
+            src: url('font/MinecraftAE.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg-color: #f0f0f0;
+            --accent-color: #0ea5e9;
+            --accent-color-hover: #0284c7;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a1a1a;
+                --text-color: #ffffff;
+                --card-bg-color: #2a2a2a;
+                --accent-color: #3b82f6;
+                --accent-color-hover: #2563eb;
+            }
+        }
+
+        body {
+            font-family: 'MinecraftAE', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            transition: background-color 0.3s;
+        }
+
+        nav {
+            background-color: var(--card-bg-color);
+            padding: 1rem 0;
+            transition: background-color 0.3s;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s 0.2s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-color-hover);
+            transform: scale(1.05);
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 3rem 0;
+        }
+
+        .feature {
+            flex-basis: calc(33.333% - 20px);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: var(--card-bg-color);
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature h3 {
+            margin-top: 0;
+        }
+
+        footer {
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        .theme-switcher select {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .subpage {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .subpage.active {
+            display: block;
+            opacity: 1;
+        }
+
+        #theme-preview {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .theme-option {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.3s;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.05);
+        }
+
+        .color-preview {
+            width: 100%;
+            height: 60%;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .theme-name {
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+            }
+
+            .feature {
+                flex-basis: 100%;
+            }
+        }
+        body.gradient-theme {
+            background-image: var(--gradient-bg);
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switcher">
+        <select id="themeSelect">
+            <option value="browser">跟随浏览器</option>
+            <option value="light-theme">浅色</option>
+            <option value="dark-theme">深色</option>
+            <option value="light-blue-theme">淡蓝色</option>
+            <option value="yellow-green-theme">黄绿色</option>
+            <option value="blue-purple-theme">蓝紫色</option>
+            <option value="orange-theme">橙色</option>
+            <option value="red-theme">红色</option>
+            <option value="caramel-theme">焦糖色</option>
+            <option value="sunrise-gradient-theme">日出渐变</option>
+            <option value="deep-sea-gradient-theme">深海渐变</option>
+            <option value="high-contrast-theme">高对比度</option>
+            <option value="colorblind-friendly-theme">色盲友好</option>
+            <option value="japanese-theme">和风主题</option>
+            <option value="chinese-theme">中国风</option>
+            <option value="romantic-theme">浪漫氛围</option>
+        </select>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1>MSM服务器管理器</h1>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#" onclick="showPage('home')">首页</a></li>
+                <li><a href="#" onclick="showPage('features')">功能</a></li>
+                <li><a href="#" onclick="showPage('download')">下载</a></li>
+                <li><a href="#" onclick="showPage('about')">关于我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div id="home" class="page active">
+                <section class="hero">
+                    <h1>简化您的Minecraft服务器管理</h1>
+                    <p>MSM服务器管理器为您提供强大而直观的工具，轻松管理您的Minecraft服务器。</p>
+                    <a href="#" onclick="showPage('download')" class="cta-button">立即下载(还在开发中暂时不能下载)</a>
+                </section>
+
+                <section class="features">
+                    <div class="feature" onclick="showSubpage('features', 'monitoring')">
+                        <h3>实时监控</h3>
+                        <p>随时掌握服务器的CPU、内存和存储使用情况。</p>
+                    </div>
+                    <div class="feature" onclick="showSubpage('features', 'themes')">
+                        <h3>多主题支持</h3>
+                        <p>提供多种主题选择，包括浅色、深色和特殊主题。</p>
+                    </div>
+                    <div class="feature" onclick="showSubpage('features', 'plugins')">
+                        <h3>插件和模组管理</h3>
+                        <p>轻松下载、安装和管理服务器的插件和模组。</p>
+                    </div>
+                </section>
+            </div>
+
+            <div id="features" class="page">
+                <h2>功能详情</h2>
+                <div id="monitoring" class="subpage">
+                    <h3>实时监控</h3>
+                    <p>我们的实时监控功能让您可以随时了解服务器的性能状况。</p>
+                </div>
+                <div id="themes" class="subpage">
+                    <h3>多主题支持</h3>
+                    <p>选择适合您的主题，让管理界面更符合您的个人风格：</p>
+                    <div id="theme-preview"></div>
+                    <p>tips: 我们提供了15种主题,此外还有两款隐藏主题正等待您的发现！</p>
+                </div>
+                <div id="plugins" class="subpage">
+                    <h3>插件和模组管理</h3>
+                    <p>轻松管理您的服务器插件和模组。</p>
+                </div>
+            </div>
+
+            <div id="download" class="page">
+                <h2>下载MSM服务器管理器</h2>
+                <p>访问我们的GitHub页面下载最新版本：</p>
+                <a href="https://github.com/Little100/Minecraft_Server_Manager" target="_blank" class="cta-button">GitHub页面</a>
+            </div>
+
+            <div id="about" class="page">
+                <h2>关于我们</h2>
+                <p>MSM服务器管理器是由热爱Minecraft的开发者团队创建的。我们致力于为Minecraft服务器管理员提供最佳的管理工具。</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 MSM服务器管理器. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script>
+        const themes = {
+            'light-theme': {
+                '--bg-color': '#ffffff',
+                '--text-color': '#000000',
+                '--card-bg-color': '#f0f0f0',
+                '--accent-color': '#0ea5e9',
+                '--accent-color-hover': '#0284c7'
+            },
+            'dark-theme': {
+                '--bg-color': '#1a1a1a',
+                '--text-color': '#ffffff',
+                '--card-bg-color': '#2a2a2a',
+                '--accent-color': '#3b82f6',
+                '--accent-color-hover': '#2563eb'
+            },
+            'light-blue-theme': {
+                '--bg-color': '#e6f3ff',
+                '--text-color': '#0066cc',
+                '--card-bg-color': '#cce6ff',
+                '--accent-color': '#3399ff',
+                '--accent-color-hover': '#0080ff'
+            },
+            'yellow-green-theme': {
+                '--bg-color': '#f0ffe6',
+                '--text-color': '#4d8000',
+                '--card-bg-color': '#e6ffcc',
+                '--accent-color': '#80cc00',
+                '--accent-color-hover': '#66a300'
+            },
+            'blue-purple-theme': {
+                '--bg-color': '#e6e6ff',
+                '--text-color': '#4d4dff',
+                '--card-bg-color': '#ccccff',
+                '--accent-color': '#8080ff',
+                '--accent-color-hover': '#6666ff'
+            },
+            'orange-theme': {
+                '--bg-color': '#fff5e6',
+                '--text-color': '#cc7a00',
+                '--card-bg-color': '#ffe6cc',
+                '--accent-color': '#ffa333',
+                '--accent-color-hover': '#ff9900'
+            },
+            'red-theme': {
+                '--bg-color': '#FFEBEE',
+                '--text-color': '#B71C1C',
+                '--card-bg-color': '#FFCDD2',
+                '--accent-color': '#D32F2F',
+                '--accent-color-hover': '#C62828'
+            },
+            'caramel-theme': {
+                '--bg-color': '#FFF3E0',
+                '--text-color': '#3E2723',
+                '--card-bg-color': '#FFE0B2',
+                '--accent-color': '#F4511E',
+                '--accent-color-hover': '#E64A19'
+            },
+            'sunrise-gradient-theme': {
+                '--gradient-bg': 'linear-gradient(to right, #FF6B6B, #9B59B6)',
+                '--text-color': '#FFFFFF',
+                '--card-bg-color': 'rgba(255, 255, 255, 0.1)',
+                '--accent-color': '#FF6B6B',
+                '--accent-color-hover': '#9B59B6'
+            },
+            'deep-sea-gradient-theme': {
+                '--gradient-bg': 'linear-gradient(to right, #1A237E, #80DEEA)',
+                '--text-color': '#FFFFFF',
+                '--card-bg-color': 'rgba(255, 255, 255, 0.1)',
+                '--accent-color': '#1A237E',
+                '--accent-color-hover': '#80DEEA'
+            },
+            'japanese-theme': {
+                '--bg-color': '#FEDFE1',
+                '--text-color': '#7B8D42',
+                '--card-bg-color': '#EAE6DA',
+                '--accent-color': '#7B8D42',
+                '--accent-color-hover': '#5A6B31'
+            },
+            'chinese-theme': {
+                '--bg-color': '#F5E6D3',
+                '--text-color': '#8B4513',
+                '--card-bg-color': '#FFF1E6',
+                '--accent-color': '#C41E3A',
+                '--accent-color-hover': '#8B0000'
+            },
+            'romantic-theme': {
+                '--bg-color': '#f71460',
+                '--text-color': '#FF69B4',
+                '--card-bg-color': '#FFE4E1',
+                '--accent-color': '#FF1493',
+                '--accent-color-hover': '#C71585'
+            },
+            'high-contrast-theme': {
+                '--bg-color': '#000080',
+                '--text-color': '#FFD700',
+                '--card-bg-color': '#000080',
+                '--accent-color': '#FFD700',
+                '--accent-color-hover': '#FFA500'
+            },
+            'colorblind-friendly-theme': {
+                '--bg-color': '#FFFFFF',
+                '--text-color': '#0047AB',
+                '--card-bg-color': '#E6E6E6',
+                '--accent-color': '#FF7F50',
+                '--accent-color-hover': '#FF6347'
+            }
+        };
+
+        const themeNames = {
+            'browser': '跟随浏览器',
+            'light-theme': '浅色',
+            'dark-theme': '深色',
+            'light-blue-theme': '淡蓝色',
+            'yellow-green-theme': '黄绿色',
+            'blue-purple-theme': '蓝紫色',
+            'orange-theme': '橙色',
+            'red-theme': '红色',
+            'caramel-theme': '焦糖色',
+            'sunrise-gradient-theme': '日出渐变',
+            'deep-sea-gradient-theme': '深海渐变',
+            'high-contrast-theme': '高对比度',
+            'colorblind-friendly-theme': '色盲友好',
+            'japanese-theme': '和风主题',
+            'chinese-theme': '中国风',
+            'romantic-theme': '浪漫氛围'
+        };
+
+        function setTheme(theme) {
+            const root = document.documentElement;
+            const body = document.body;
+            const themeColors = themes[theme];
+            
+            body.classList.remove('gradient-theme');
+            
+            if (theme === 'browser') {
+                root.removeAttribute('style');
+                body.style.removeProperty('--bg-color');
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+            } else if (themeColors) {
+                for (const [property, value] of Object.entries(themeColors)) {
+                    root.style.setProperty(property, value);
+                }
+                
+                if (theme.includes('gradient')) {
+                    body.classList.add('gradient-theme');
+                    body.style.setProperty('--bg-color', 'transparent');
+                } else {
+                    body.style.removeProperty('--bg-color');
+                }
+                document.body.classList.remove('dark-mode');
+            }
+            
+            localStorage.setItem('theme', theme);
+        }
+
+        const themeSelect = document.getElementById('themeSelect');
+
+        themeSelect.addEventListener('change', function() {
+            setTheme(this.value);
+        });
+
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'browser';
+            setTheme(savedTheme);
+            themeSelect.value = savedTheme;
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeTheme);
+
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function(e) {
+                if (themeSelect.value === 'browser') {
+                    setTheme('browser');
+                }
+            });
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function showSubpage(pageId, subpageId) {
+            showPage(pageId);
+            document.querySelectorAll('.subpage').forEach(subpage => {
+                subpage.classList.remove('active');
+            });
+            document.getElementById(subpageId).classList.add('active');
+            if (subpageId === 'themes') {
+                populateThemePreview();
+            }
+        }
+
+        function populateThemePreview() {
+            const themePreview = document.getElementById('theme-preview');
+            themePreview.innerHTML = '';
+            Object.keys(themes).forEach(theme => {
+                const themeOption = document.createElement('div');
+                themeOption.className = 'theme-option';
+                const colorPreview = document.createElement('div');
+                colorPreview.className = 'color-preview';
+                if (theme.includes('gradient')) {
+                    colorPreview.style.background = themes[theme]['--gradient-bg'];
+                } else {
+                    colorPreview.style.background = themes[theme]['--bg-color'];
+                }
+                themeOption.appendChild(colorPreview);
+                const themeName = document.createElement('div');
+                themeName.className = 'theme-name';
+                themeName.textContent = themeNames[theme];
+                themeOption.appendChild(themeName);
+                themeOption.onclick = () => {
+                    setTheme(theme);
+                    themeSelect.value = theme;
+                };
+                themePreview.appendChild(themeOption);
+            });
+        }
+    </script>
+</body>
+</html>
